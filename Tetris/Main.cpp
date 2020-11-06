@@ -1,12 +1,14 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
+using namespace std;
 
 #include <Windows.h>
-#include <array>
 
 // Global variables
 // Tetrominoes
 // TODO: Use std::array for tetromino
-std::wstring tetromino[7];
+wstring tetromino[7];
 
 // Playing field
 int nFieldWidth = 12;
@@ -148,14 +150,46 @@ int main()
 	int nCurrentX = nFieldWidth / 2;
 	int nCurrentY = 0;
 
+	// Input
+	// TODO: Add up arrow for hard drop
+	bool bKey[4];
+
 	// Game loop
 	while (!bGameOver)
 	{
 		// GAME TIMING ===========================================
+		this_thread::sleep_for(50ms);
 
 		// INPUT =================================================
+		for (int k = 0; k < 4; k++)
+		{
+			// \x27		= Right arrow	VK_RIGHT
+			// \x25		= Left arrow	VK_LEFT
+			// \x28		= Down arrow	VK_DOWN
+			// Z		= Z (rotate)	0x5A
+			bKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28Z"[k]))) != 0;
+		}
 
 		// GAME LOGIC ============================================
+		// Right key pressed
+		if (bKey[0] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX + 1, nCurrentY))
+		{
+			nCurrentX++;
+		}
+		// Left key pressed
+		if (bKey[1] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX - 1, nCurrentY))
+		{
+			nCurrentX--;
+		}
+		// Down key pressed
+		if (bKey[2] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))
+		{
+			nCurrentY++;
+		}
+		if (bKey[3] && DoesPieceFit(nCurrentPiece, nCurrentRotation + 1, nCurrentX, nCurrentY))
+		{
+			nCurrentRotation++;
+		}
 
 		// RENDER OUTPUT =========================================
 
