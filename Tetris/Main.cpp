@@ -155,11 +155,18 @@ int main()
 	bool bKey[4];
 	bool bRotateHold = true;
 
+	// Game difficulty
+	int nSpeed = 20;
+	int nSpeedCounter = 0;
+	bool bForceDown = false;
+
 	// Game loop
 	while (!bGameOver)
 	{
 		// GAME TIMING ===========================================
 		this_thread::sleep_for(50ms);
+		nSpeedCounter++;
+		bForceDown = (nSpeedCounter == nSpeed);
 
 		// INPUT =================================================
 		for (int k = 0; k < 4; k++)
@@ -172,6 +179,7 @@ int main()
 		}
 
 		// GAME LOGIC ============================================
+		// Player movement
 		// Right key pressed
 		if (bKey[0] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX + 1, nCurrentY))
 		{
@@ -200,6 +208,46 @@ int main()
 		else
 		{
 			bRotateHold = false;
+		}
+
+		// Game movement
+		// If it's time to force the tetromino down
+		if (bForceDown)
+		{
+			if (DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))
+			{
+				// Move piece down if it fits
+				nCurrentY++;
+			}
+			else
+			{
+				// Lock the current piece in the field
+				for (int px = 0; px < 4; px++)
+				{
+					for (int py = 0; py < 4; py++)
+					{
+						if (tetromino[nCurrentPiece][Rotate(px, py, nCurrentRotation)] == L'X')
+						{
+							// Place peice in the field
+							pField[(nCurrentY + py) * nFieldWidth + (nCurrentX + px)] = nCurrentPiece + 1;
+						}
+					}
+				}
+
+				// Check for horizontal lines
+
+				// Choose the next piece
+				nCurrentX = nFieldWidth / 2;
+				nCurrentY = 0;
+				nCurrentRotation = 0;
+				// TODO: Implement better random method
+				nCurrentPiece = rand() % 7;
+
+				// If piece does not fit, game over
+				bGameOver = !DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY);
+			}
+
+			nSpeedCounter = 0;
 		}
 
 		// RENDER OUTPUT =========================================
