@@ -1,9 +1,20 @@
 #include <iostream>
 
+#include <Windows.h>
+
+// Global variables
+// Tetrominoes
 std::wstring tetromino[7];
+
+// Playing field
 int nFieldWidth = 12;
 int nFieldHeight = 18;
 unsigned char* pField = nullptr;
+
+// Console screen
+int nScreenWidth = 80;		// Console screen size x (columns)
+int nScreenHeight = 30;		// Console screen size y (rows)
+
 
 /// <summary>
 /// Returns a new index for a tetromino piece given its coordinates and a rotation.
@@ -77,6 +88,20 @@ int main()
 			pField[y * nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
 		}
 	}
+
+	// Setup console to be used as screen buffer
+	wchar_t* screen = new wchar_t[nScreenWidth * nScreenHeight];
+	for (int i = 0; i < nScreenWidth * nScreenHeight; i++)
+	{
+		screen[i] = L' ';
+	}
+	HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	SetConsoleActiveScreenBuffer(hConsole);
+	DWORD dwBytesWritten = 0;
+
+	// Clean up
+	delete[] screen;
+	delete[] pField;
 
 	return 0;
 }
