@@ -12,7 +12,7 @@ int nFieldHeight = 18;
 unsigned char* pField = nullptr;
 
 // Console screen
-int nScreenWidth = 80;		// Console screen size x (columns)
+int nScreenWidth = 120;		// Console screen size x (columns)
 int nScreenHeight = 30;		// Console screen size y (rows)
 
 
@@ -99,8 +99,26 @@ int main()
 	SetConsoleActiveScreenBuffer(hConsole);
 	DWORD dwBytesWritten = 0;
 
-	// Display frame
-	WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
+	// Game loop
+	bool bGameOver = false;
+
+	while (!bGameOver)
+	{
+		// Draw playing field
+		for (int x = 0; x < nFieldWidth; x++)
+		{
+			for (int y = 0; y < nFieldHeight; y++)
+			{
+				// 1-7 = A-G for tetrominoes
+				// 8 = for line
+				// 9 = for border
+				screen[(y + 2) * nScreenWidth + (x + 2)] = L" ABCDEFG=#"[pField[y * nFieldWidth + x]];
+			}
+		}
+
+		// Display frame
+		WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
+	}
 
 	// Clean up
 	delete[] screen;
