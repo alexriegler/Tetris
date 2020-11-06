@@ -235,6 +235,30 @@ int main()
 				}
 
 				// Check for horizontal lines
+				// Check 4 rows of tetromino for lines
+				for (int py = 0; py < 4; py++)
+				{
+					// Boundary check
+					if (nCurrentY + py < nFieldHeight - 1)
+					{
+						bool bLine = true;
+						// Exlcude first and last column in check (since they are empty)
+						for (int px = 1; px < nFieldWidth - 1; px++)
+						{
+							bLine &= (pField[(nCurrentY + py) * nFieldWidth + px]) != 0;
+						}
+
+						if (bLine)
+						{
+							// Remove line (set to '=')
+							for (int px = 1; px < nFieldWidth - 1; px++)
+							{
+								// TODO: Change constant 8 to enum or something
+								pField[(nCurrentY + py) * nFieldWidth + px] = 8;
+							}
+						}
+					}
+				}
 
 				// Choose the next piece
 				nCurrentX = nFieldWidth / 2;
