@@ -153,6 +153,7 @@ int main()
 	// Input
 	// TODO: Add up arrow for hard drop
 	bool bKey[4];
+	bool bRotateHold = true;
 
 	// Game loop
 	while (!bGameOver)
@@ -186,9 +187,19 @@ int main()
 		{
 			nCurrentY++;
 		}
-		if (bKey[3] && DoesPieceFit(nCurrentPiece, nCurrentRotation + 1, nCurrentX, nCurrentY))
+		// Z key pressed (rotate)
+		// Latches the rotation so that it does spin repetitively
+		if (bKey[3])
 		{
-			nCurrentRotation++;
+			if (!bRotateHold && DoesPieceFit(nCurrentPiece, nCurrentRotation + 1, nCurrentX, nCurrentY))
+			{
+				nCurrentRotation++;
+			}
+			bRotateHold = true;
+		}
+		else
+		{
+			bRotateHold = false;
 		}
 
 		// RENDER OUTPUT =========================================
