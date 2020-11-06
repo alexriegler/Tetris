@@ -1,9 +1,11 @@
 #include <iostream>
 
 #include <Windows.h>
+#include <array>
 
 // Global variables
 // Tetrominoes
+// TODO: Use std::array for tetromino
 std::wstring tetromino[7];
 
 // Playing field
@@ -33,6 +35,44 @@ int Rotate(int px, int py, int r)
 	case 2: return 15 - (py * 4) - px;	// 180 degrees
 	case 3: return 3 - py + (px * 4);	// 270 degrees
 	}
+}
+
+/// <summary>
+/// Checks whether a tetromino piece fits in a given location.
+/// </summary>
+/// <param name="nTetromino">The index of the tetromino</param>
+/// <param name="nRotation">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270</param>
+/// <param name="nPosX">The x position of the top left corner of the tetromino</param>
+/// <param name="nPosY">The y position of the top left corner of the tetromino</param>
+/// <returns>True, if the piece fits; false, otherwise</returns>
+bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
+{
+	for (int px = 0; px < 4; px++)
+	{
+		for (int py = 0; py < 4; py++)
+		{
+			// Get index into piece
+			int pi = Rotate(px, py, nRotation);
+
+			// Get index into field
+			int fi = (nPosY + py) * nFieldWidth + (nPosX + px);
+
+			// Check array bounds
+			if (nPosX + px >= 0 && nPosX + px < nFieldWidth)
+			{
+				if (nPosY + py >= 0 && nPosY + py < nFieldHeight)
+				{
+					// Collision detection
+					if (tetromino[nTetromino][pi] == L'X' && pField[fi] != 0)
+					{
+						return false; // fail on first hit
+					}
+				}
+			}
+		}
+	}
+	
+	return true;
 }
 
 int main()
@@ -104,14 +144,26 @@ int main()
 
 	while (!bGameOver)
 	{
+		// GAME TIMING ===========================================
+
+		// INPUT =================================================
+
+		// GAME LOGIC ============================================
+
+		// RENDER OUTPUT =========================================
+
 		// Draw playing field
 		for (int x = 0; x < nFieldWidth; x++)
 		{
 			for (int y = 0; y < nFieldHeight; y++)
 			{
-				// 1-7 = A-G for tetrominoes
-				// 8 = for line
-				// 9 = for border
+				// Symbol key:
+				// Index	Char	Represents
+				// ______________________________
+				//   0	|	( )	  |	empty space 
+				//  1-7	|  (A-G)  |	tetrominoes
+				//   8	|	(=)	  |	   line 
+				//   9	|	(#)	  |	  border
 				screen[(y + 2) * nScreenWidth + (x + 2)] = L" ABCDEFG=#"[pField[y * nFieldWidth + x]];
 			}
 		}
