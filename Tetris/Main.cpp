@@ -99,6 +99,9 @@ int main()
 	SetConsoleActiveScreenBuffer(hConsole);
 	DWORD dwBytesWritten = 0;
 
+	// Display frame
+	WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
+
 	// Clean up
 	delete[] screen;
 	delete[] pField;
