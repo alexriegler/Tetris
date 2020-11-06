@@ -1,6 +1,6 @@
 #include <iostream>
 #include <thread>
-#include <chrono>
+#include <vector>
 using namespace std;
 
 #include <Windows.h>
@@ -19,6 +19,7 @@ unsigned char* pField = nullptr;
 int nScreenWidth = 120;		// Console screen size x (columns)
 int nScreenHeight = 30;		// Console screen size y (rows)
 
+vector<int> vLines;
 
 /// <summary>
 /// Returns a new index for a tetromino piece given its coordinates and a rotation.
@@ -214,9 +215,9 @@ int main()
 		// If it's time to force the tetromino down
 		if (bForceDown)
 		{
+			// Move piece down if it fits
 			if (DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))
 			{
-				// Move piece down if it fits
 				nCurrentY++;
 			}
 			else
@@ -256,6 +257,8 @@ int main()
 								// TODO: Change constant 8 to enum or something
 								pField[(nCurrentY + py) * nFieldWidth + px] = 8;
 							}
+
+							vLines.push_back(nCurrentY + py);
 						}
 					}
 				}
@@ -303,6 +306,28 @@ int main()
 					screen[(nCurrentY + py + 2) * nScreenWidth + (nCurrentX + px + 2)] = nCurrentPiece + 65;
 				}
 			}
+		}
+
+		if (!vLines.empty())
+		{
+			// Display frame (hacky draw lines)
+			WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0,0 }, &dwBytesWritten);
+			this_thread::sleep_for(400ms); // Delay a bit
+
+			// Move lines down
+			for (auto& v : vLines)
+			{
+				for (int px = 1; px < nFieldWidth - 1; px++)
+				{
+					for (int py = v; py > 0; py--)
+					{
+						pField[py * nFieldWidth + px] = pField[(py - 1) * nFieldWidth + px];
+					}
+					pField[px] = 0;
+				}
+			}
+
+			vLines.clear();
 		}
 
 		// Display frame
