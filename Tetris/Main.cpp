@@ -139,9 +139,16 @@ int main()
 	SetConsoleActiveScreenBuffer(hConsole);
 	DWORD dwBytesWritten = 0;
 
-	// Game loop
+	// Game logic
 	bool bGameOver = false;
 
+	// Game state
+	int nCurrentPiece = 0;
+	int nCurrentRotation = 0;
+	int nCurrentX = nFieldWidth / 2;
+	int nCurrentY = 0;
+
+	// Game loop
 	while (!bGameOver)
 	{
 		// GAME TIMING ===========================================
@@ -165,6 +172,19 @@ int main()
 				//   8	|	(=)	  |	   line 
 				//   9	|	(#)	  |	  border
 				screen[(y + 2) * nScreenWidth + (x + 2)] = L" ABCDEFG=#"[pField[y * nFieldWidth + x]];
+			}
+		}
+
+		// Draw current piece
+		for (int px = 0; px < 4; px++)
+		{
+			for (int py = 0; py < 4; py++)
+			{
+				if (tetromino[nCurrentPiece][Rotate(px, py, nCurrentRotation)] == L'X')
+				{
+					// Add 65 to current piece index to get ASCII 'A' - 'G'
+					screen[(nCurrentY + py + 2) * nScreenWidth + (nCurrentX + px + 2)] = nCurrentPiece + 65;
+				}
 			}
 		}
 
