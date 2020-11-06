@@ -1,6 +1,9 @@
 #include <iostream>
 
 std::wstring tetromino[7];
+int nFieldWidth = 12;
+int nFieldHeight = 18;
+unsigned char* pField = nullptr;
 
 /// <summary>
 /// Returns a new index for a tetromino piece given its coordinates and a rotation.
@@ -23,6 +26,7 @@ int Rotate(int px, int py, int r)
 
 int main()
 {
+	// Create assets
 	tetromino[0].append(L"..X.");
 	tetromino[0].append(L"..X.");
 	tetromino[0].append(L"..X.");
@@ -57,6 +61,22 @@ int main()
 	tetromino[6].append(L".XX.");
 	tetromino[6].append(L".X..");
 	tetromino[6].append(L".X..");
+
+	// Initialize playing field
+	// Create playing field buffer
+	pField = new unsigned char[nFieldWidth * nFieldHeight];
+	
+	// Create playing field boundary
+	for (int x = 0; x < nFieldWidth; x++)
+	{
+		for (int y = 0; y < nFieldHeight; y++)
+		{
+			// TODO: Fix space representation
+			// 9 represents a border
+			// 0 represents a empty space
+			pField[y * nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
+		}
+	}
 
 	return 0;
 }
