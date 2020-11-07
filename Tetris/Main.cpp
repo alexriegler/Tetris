@@ -19,8 +19,6 @@ unsigned char* pField = nullptr;
 int nScreenWidth = 120;		// Console screen size x (columns)
 int nScreenHeight = 30;		// Console screen size y (rows)
 
-vector<int> vLines;
-
 /// <summary>
 /// Returns a new index for a tetromino piece given its coordinates and a rotation.
 /// </summary>
@@ -160,6 +158,12 @@ int main()
 	int nSpeed = 20;
 	int nSpeedCounter = 0;
 	bool bForceDown = false;
+	int nPieceCount = 0;
+
+	// Score
+	int nScore = 0;
+
+	vector<int> vLines;
 
 	// Game loop
 	while (!bGameOver)
@@ -235,6 +239,16 @@ int main()
 					}
 				}
 
+				// Increment piece count and decrease ticks required to move piece (i.e., move faster)
+				nPieceCount++;
+				if (nPieceCount % 10 == 0)
+				{
+					if (nSpeed >= 10)
+					{
+						nSpeed--;
+					}
+				}
+
 				// Check for horizontal lines
 				// Check 4 rows of tetromino for lines
 				for (int py = 0; py < 4; py++)
@@ -263,6 +277,14 @@ int main()
 					}
 				}
 
+				// Score
+				nScore += 25;
+				if (!vLines.empty())
+				{
+					// Lines are worth: lines^2 * 100
+					nScore += (1 << vLines.size()) * 100;
+				}
+
 				// Choose the next piece
 				nCurrentX = nFieldWidth / 2;
 				nCurrentY = 0;
@@ -278,7 +300,6 @@ int main()
 		}
 
 		// RENDER OUTPUT =========================================
-
 		// Draw playing field
 		for (int x = 0; x < nFieldWidth; x++)
 		{
@@ -308,6 +329,10 @@ int main()
 			}
 		}
 
+		// Draw score
+		swprintf_s(&screen[2 * nScreenWidth + nFieldWidth + 6], 16, L"SCORE: %8d", nScore);
+
+		// Draw line animation
 		if (!vLines.empty())
 		{
 			// Display frame (hacky draw lines)
@@ -335,8 +360,13 @@ int main()
 	}
 
 	// Clean up
+	CloseHandle(hConsole);
 	delete[] screen;
 	delete[] pField;
+
+	// Game over
+	cout << "Game Over! Score: " << nScore << endl;
+	system("pause");
 
 	return 0;
 }
