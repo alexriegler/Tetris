@@ -6,14 +6,6 @@ namespace Tetris
 {
 	enum class Shape { I, J, L, O, S, Z, T };
 
-	const wstring Ipiece;
-	const wstring Jpiece;
-	const wstring Lpiece;
-	const wstring Opiece;
-	const wstring Spiece;
-	const wstring Zpiece;
-	const wstring Tpiece;
-
 	class Tetromino
 	{
 	public:
@@ -24,5 +16,13 @@ namespace Tetris
 		const Shape m_shape;
 		const wchar_t m_symbol;
 		const wstring m_piece;
+
+		static const wstring Ipiece;
+		static const wstring Jpiece;
+		static const wstring Lpiece;
+		static const wstring Opiece;
+		static const wstring Spiece;
+		static const wstring Zpiece;
+		static const wstring Tpiece;
 	};
 }

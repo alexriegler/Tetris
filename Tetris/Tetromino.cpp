@@ -3,49 +3,49 @@
 
 namespace Tetris
 {
-	const wstring Ipiece{
+	const wstring Tetromino::Ipiece{
 		L"...."
 		L"...."
 		L"XXXX"
 		L"...."
 	};
 
-	const wstring Jpiece{
+	const wstring Tetromino::Jpiece{
 		L"...."
 		L"X..."
 		L"XXX."
 		L"...."
 	};
 
-	const wstring Lpiece{
+	const wstring Tetromino::Lpiece{
 		L"...."
 		L"..X."
 		L"XXX."
 		L"...."
 	};
 
-	const wstring Opiece{
+	const wstring Tetromino::Opiece{
 		L"...."
 		L".XX."
 		L".XX."
 		L"...."
 	};
 
-	const wstring Spiece{
+	const wstring Tetromino::Spiece{
 		L"...."
 		L".XX."
 		L"XX.."
 		L"...."
 	};
 
-	const wstring Zpiece{
+	const wstring Tetromino::Zpiece{
 		L"...."
 		L"XX.."
 		L".XX."
 		L"...."
 	};
 
-	const wstring Tpiece{
+	const wstring Tetromino::Tpiece{
 		L"...."
 		L".X.."
 		L"XXX."
