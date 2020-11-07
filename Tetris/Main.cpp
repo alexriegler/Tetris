@@ -11,8 +11,8 @@ using namespace std;
 wstring tetromino[7];
 
 // Playing field
-int nFieldWidth = 12;
-int nFieldHeight = 18;
+int nFieldWidth = 10;
+int nFieldHeight = 20;
 unsigned char* pField = nullptr;
 
 // Console screen
