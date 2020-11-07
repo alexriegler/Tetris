@@ -5,9 +5,14 @@ using namespace std;
 
 #include <Windows.h>
 
+#include "Tetromino.h"
+#include "RandomBag.h"
+
 // Global variables
 // Tetrominoes
 // TODO: Use std::array for tetromino
+Tetris::RandomBag<Tetris::Tetromino, 7> randomBag;
+
 wstring tetromino[7];
 
 // Playing field
@@ -79,6 +84,26 @@ bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
 int main()
 {
 	// Create assets
+
+	// Init bag
+	Tetris::Tetromino I_tetromino{ Tetris::Shape::I, L'A', Tetris::Ipiece };
+	Tetris::Tetromino J_tetromino{ Tetris::Shape::J, L'B', Tetris::Jpiece };
+	Tetris::Tetromino L_tetromino{ Tetris::Shape::L, L'C', Tetris::Lpiece };
+	Tetris::Tetromino O_tetromino{ Tetris::Shape::O, L'D', Tetris::Opiece };
+	Tetris::Tetromino S_tetromino{ Tetris::Shape::S, L'E', Tetris::Spiece };
+	Tetris::Tetromino Z_tetromino{ Tetris::Shape::Z, L'F', Tetris::Zpiece };
+	Tetris::Tetromino T_tetromino{ Tetris::Shape::T, L'G', Tetris::Tpiece };
+	randomBag.Place(&I_tetromino);
+	randomBag.Place(&J_tetromino);
+	randomBag.Place(&L_tetromino);
+	randomBag.Place(&O_tetromino);
+	randomBag.Place(&S_tetromino);
+	randomBag.Place(&Z_tetromino);
+	randomBag.Place(&T_tetromino);
+	randomBag.Mix();
+	Tetris::Tetromino cur_piece = randomBag.Grab();
+	cur_piece = randomBag.Grab();
+
 	tetromino[0].append(L"..X.");
 	tetromino[0].append(L"..X.");
 	tetromino[0].append(L"..X.");
@@ -146,7 +171,7 @@ int main()
 	// Game state
 	int nCurrentPiece = 0;
 	int nCurrentRotation = 0;
-	int nCurrentX = nFieldWidth / 2;
+	int nCurrentX = nFieldWidth / 2 - 2;
 	int nCurrentY = 0;
 
 	// Input
@@ -286,7 +311,7 @@ int main()
 				}
 
 				// Choose the next piece
-				nCurrentX = nFieldWidth / 2;
+				nCurrentX = nFieldWidth / 2 - 2;
 				nCurrentY = 0;
 				nCurrentRotation = 0;
 				// TODO: Implement better random method
