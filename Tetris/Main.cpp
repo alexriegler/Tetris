@@ -1,14 +1,31 @@
+#include "Tetromino.h"
+#include "RandomBag.h"
+
 #include <iostream>
 #include <thread>
 #include <vector>
-using namespace std;
 
 #include <Windows.h>
 
+// TODO: Remove using std.
+using namespace std;
+
+// TODO: Make the code style consistent.
+// TODO: Split main into modular parts: game, tetris, score, field, etc.
+// TODO: Add ghost piece (where the piece will fall).
+// TODO: Add hold piece.
+// TODO: Add future piece preview.
+// TODO: Add current speed level.
+// TODO: Fix speedup (doesn't seem like it speeds up much if at all).
+// TODO: Add opposite direction rotation (you can only rotate in one direction at the moment).
+// TODO: Add color to pieces.
+// TODO: (Optional) Change pieces from letters to block-like character.
+// TODO: Add wall-kick (when piece is next to a wall, move piece then rotate).
+
+// TODO: Eliminate globals.
 // Global variables
 // Tetrominoes
-// TODO: Use std::array for tetromino
-wstring tetromino[7];
+Tetris::RandomBag randomBag{};
 
 // Playing field
 int nFieldWidth = 10;
@@ -22,10 +39,10 @@ int nScreenHeight = 30;		// Console screen size y (rows)
 /// <summary>
 /// Returns a new index for a tetromino piece given its coordinates and a rotation.
 /// </summary>
-/// <param name="px">The x position of the piece</param>
-/// <param name="py">The y position of the piece</param>
-/// <param name="r">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270</param>
-/// <returns>Rotated index</returns>
+/// <param name="px">The x position of the piece.</param>
+/// <param name="py">The y position of the piece.</param>
+/// <param name="r">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270.</param>
+/// <returns>Rotated index.</returns>
 int Rotate(int px, int py, int r)
 {
 	// TODO: Use enum for rotation
@@ -41,12 +58,12 @@ int Rotate(int px, int py, int r)
 /// <summary>
 /// Checks whether a tetromino piece fits in a given location.
 /// </summary>
-/// <param name="nTetromino">The index of the tetromino</param>
-/// <param name="nRotation">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270</param>
-/// <param name="nPosX">The x position of the top left corner of the tetromino</param>
-/// <param name="nPosY">The y position of the top left corner of the tetromino</param>
-/// <returns>True, if the piece fits; false, otherwise</returns>
-bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
+/// <param name="tetromino">The tetromino piece.</param>
+/// <param name="nRotation">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270.</param>
+/// <param name="nPosX">The x position of the top left corner of the tetromino.</param>
+/// <param name="nPosY">The y position of the top left corner of the tetromino.</param>
+/// <returns>True, if the piece fits; false, otherwise.</returns>
+bool DoesPieceFit(const Tetris::Tetromino& tetromino, int nRotation, int nPosX, int nPosY)
 {
 	for (int px = 0; px < 4; px++)
 	{
@@ -63,57 +80,20 @@ bool DoesPieceFit(int nTetromino, int nRotation, int nPosX, int nPosY)
 			{
 				if (nPosY + py >= 0 && nPosY + py < nFieldHeight)
 				{
-					// Collision detection
-					if (tetromino[nTetromino][pi] == L'X' && pField[fi] != 0)
+					// Detect collision (check if piece fits in location
+					if (tetromino[pi] == L'X' && pField[fi] != 0)
 					{
-						return false; // fail on first hit
+						return false;
 					}
 				}
 			}
 		}
 	}
-	
 	return true;
 }
 
 int main()
 {
-	// Create assets
-	tetromino[0].append(L"..X.");
-	tetromino[0].append(L"..X.");
-	tetromino[0].append(L"..X.");
-	tetromino[0].append(L"..X.");
-
-	tetromino[1].append(L"..X.");
-	tetromino[1].append(L".XX.");
-	tetromino[1].append(L".X..");
-	tetromino[1].append(L"....");
-
-	tetromino[2].append(L".X..");
-	tetromino[2].append(L".XX.");
-	tetromino[2].append(L"..X.");
-	tetromino[2].append(L"....");
-
-	tetromino[3].append(L"....");
-	tetromino[3].append(L".XX.");
-	tetromino[3].append(L".XX.");
-	tetromino[3].append(L"....");
-
-	tetromino[4].append(L"..X.");
-	tetromino[4].append(L".XX.");
-	tetromino[4].append(L"..X.");
-	tetromino[4].append(L"....");
-
-	tetromino[5].append(L"....");
-	tetromino[5].append(L".XX.");
-	tetromino[5].append(L"..X.");
-	tetromino[5].append(L"..X.");
-
-	tetromino[6].append(L"....");
-	tetromino[6].append(L".XX.");
-	tetromino[6].append(L".X..");
-	tetromino[6].append(L".X..");
-
 	// Initialize playing field
 	// Create playing field buffer
 	pField = new unsigned char[nFieldWidth * nFieldHeight];
@@ -144,9 +124,9 @@ int main()
 	bool bGameOver = false;
 
 	// Game state
-	int nCurrentPiece = 0;
+	Tetris::Tetromino cur_piece = randomBag.next();
 	int nCurrentRotation = 0;
-	int nCurrentX = nFieldWidth / 2;
+	int nCurrentX = nFieldWidth / 2 - 2;
 	int nCurrentY = 0;
 
 	// Input
@@ -186,17 +166,17 @@ int main()
 		// GAME LOGIC ============================================
 		// Player movement
 		// Right key pressed
-		if (bKey[0] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX + 1, nCurrentY))
+		if (bKey[0] && DoesPieceFit(cur_piece, nCurrentRotation, nCurrentX + 1, nCurrentY))
 		{
 			nCurrentX++;
 		}
 		// Left key pressed
-		if (bKey[1] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX - 1, nCurrentY))
+		if (bKey[1] && DoesPieceFit(cur_piece, nCurrentRotation, nCurrentX - 1, nCurrentY))
 		{
 			nCurrentX--;
 		}
 		// Down key pressed
-		if (bKey[2] && DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))
+		if (bKey[2] && DoesPieceFit(cur_piece, nCurrentRotation, nCurrentX, nCurrentY + 1))
 		{
 			nCurrentY++;
 		}
@@ -204,7 +184,7 @@ int main()
 		// Latches the rotation so that it does spin repetitively
 		if (bKey[3])
 		{
-			if (!bRotateHold && DoesPieceFit(nCurrentPiece, nCurrentRotation + 1, nCurrentX, nCurrentY))
+			if (!bRotateHold && DoesPieceFit(cur_piece, nCurrentRotation + 1, nCurrentX, nCurrentY))
 			{
 				nCurrentRotation++;
 			}
@@ -220,7 +200,7 @@ int main()
 		if (bForceDown)
 		{
 			// Move piece down if it fits
-			if (DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY + 1))
+			if (DoesPieceFit(cur_piece, nCurrentRotation, nCurrentX, nCurrentY + 1))
 			{
 				nCurrentY++;
 			}
@@ -231,10 +211,10 @@ int main()
 				{
 					for (int py = 0; py < 4; py++)
 					{
-						if (tetromino[nCurrentPiece][Rotate(px, py, nCurrentRotation)] == L'X')
+						if (cur_piece[Rotate(px, py, nCurrentRotation)] == L'X')
 						{
 							// Place peice in the field
-							pField[(nCurrentY + py) * nFieldWidth + (nCurrentX + px)] = nCurrentPiece + 1;
+							pField[(nCurrentY + py) * nFieldWidth + (nCurrentX + px)] = cur_piece.id;
 						}
 					}
 				}
@@ -285,15 +265,14 @@ int main()
 					nScore += (1 << vLines.size()) * 100;
 				}
 
-				// Choose the next piece
-				nCurrentX = nFieldWidth / 2;
+				// Choose the next piece and reset the piece position and rotation
+				cur_piece = randomBag.next();
+				nCurrentX = nFieldWidth / 2 - 2;
 				nCurrentY = 0;
 				nCurrentRotation = 0;
-				// TODO: Implement better random method
-				nCurrentPiece = rand() % 7;
 
 				// If piece does not fit, game over
-				bGameOver = !DoesPieceFit(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY);
+				bGameOver = !DoesPieceFit(cur_piece, nCurrentRotation, nCurrentX, nCurrentY);
 			}
 
 			nSpeedCounter = 0;
@@ -321,10 +300,9 @@ int main()
 		{
 			for (int py = 0; py < 4; py++)
 			{
-				if (tetromino[nCurrentPiece][Rotate(px, py, nCurrentRotation)] == L'X')
+				if (cur_piece[Rotate(px, py, nCurrentRotation)] == L'X')
 				{
-					// Add 65 to current piece index to get ASCII 'A' - 'G'
-					screen[(nCurrentY + py + 2) * nScreenWidth + (nCurrentX + px + 2)] = nCurrentPiece + 65;
+					screen[(nCurrentY + py + 2) * nScreenWidth + (nCurrentX + px + 2)] = cur_piece.symbol;
 				}
 			}
 		}
@@ -365,7 +343,7 @@ int main()
 	delete[] pField;
 
 	// Game over
-	cout << "Game Over! Score: " << nScore << endl;
+	std::cout << "Game Over! Score: " << nScore << std::endl;
 	system("pause");
 
 	return 0;
