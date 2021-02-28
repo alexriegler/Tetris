@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RandomBag.cpp">
+    <ClCompile Include="src\RandomBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tetromino.h">
+    <ClInclude Include="src\RandomBag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RandomBag.h">
+    <ClInclude Include="src\RandomGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RandomGenerator.h">
+    <ClInclude Include="src\Tetromino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
