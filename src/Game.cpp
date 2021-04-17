@@ -63,14 +63,15 @@ namespace ar {
 
 	// Deconstructor
 	Game::~Game() {
-		CloseHandle(hConsole);
-		delete[] screen;
-		delete[] pField;
-
 		// Game over message
-		std::cout << "Game Over! Score: " << nScore << std::endl;
+		// Need to close console handle before writing to std::cout
+		CloseHandle(hConsole);
+		std::cout << "Game Over! Score: " << nScore << '\n';
 		// TODO: Windows specific; change to cross platform "Press any key to continue"
 		system("pause");
+
+		delete[] screen;
+		delete[] pField;
 	}
 
 	// Functions
@@ -277,12 +278,6 @@ namespace ar {
 	}
 
 	//void Game::on_game_pause();
-	
-	void Game::on_game_over() {
-		//std::cout << "Game Over! Score: " << nScore << std::endl;
-		//// TODO: Windows specific; change to cross platform "Press any key to continue"
-		//system("pause");
-	}
 
 	bool Game::is_running() const noexcept {
 		return m_is_running;

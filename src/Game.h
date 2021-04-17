@@ -31,8 +31,6 @@ namespace ar {
 
 		//void on_game_pause();
 
-		void on_game_over();
-
 		// Accessor functions
 		bool is_running() const noexcept;
 		bool is_paused() const noexcept;

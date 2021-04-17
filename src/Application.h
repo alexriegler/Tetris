@@ -22,8 +22,6 @@ namespace ar {
 					m_game.on_game_pause();
 				}*/
 			}
-
-			m_game.on_game_over();
 		}
 
 	private:
