@@ -25,9 +25,11 @@ namespace ar {
 		void fixed_update();
 		
 		/*void update();
-		void late_update();
+		void late_update();*/
+		
 		void on_render();
-		void on_game_pause();*/
+
+		//void on_game_pause();
 
 		void on_game_over();
 

@@ -207,7 +207,15 @@ namespace ar {
 			}
 
 			nSpeedCounter = 0;
-		}
+		}		
+	}
+
+	/*void Game::update();
+	void Game::late_update();*/
+
+	void Game::on_render() {
+		// For ms suffix
+		using namespace std::chrono_literals;
 
 		// RENDER OUTPUT =========================================
 		// Draw playing field
@@ -268,10 +276,7 @@ namespace ar {
 		WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
 	}
 
-	/*void Game::update();
-	void Game::late_update();
-	void Game::on_render();
-	void Game::on_game_pause();*/
+	//void Game::on_game_pause();
 	
 	void Game::on_game_over() {
 		//std::cout << "Game Over! Score: " << nScore << std::endl;
