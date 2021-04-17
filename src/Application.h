@@ -3,10 +3,12 @@
 #include "Game.h"
 
 namespace ar {
+	template<GameType T>
 	class Application {
 	public:
 		// Constructor
 		Application() : m_game{} {}
+		// TODO: Add ability to construct application from game so that commandline options can be passed to it
 
 		// Function
 		void run() {
@@ -26,6 +28,6 @@ namespace ar {
 
 	private:
 		// Data
-		Game m_game;
+		T m_game;
 	};
 }

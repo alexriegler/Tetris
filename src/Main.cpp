@@ -1,4 +1,7 @@
 #include "Application.h"
+#include "Tetris.h"
+
+using namespace ar;
 
 // TODO: Make the code style consistent.
 // TODO: Split main into modular parts: game, tetris, score, field, etc.
@@ -13,6 +16,6 @@
 // TODO: Add wall-kick (when piece is next to a wall, move piece then rotate).
 
 int main() {
-	ar::Application app;
+	Application<Tetris> app;
 	app.run();
 }

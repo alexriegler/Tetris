@@ -21,7 +21,7 @@
     <ClCompile Include="src\RandomBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="src\Tetris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,10 +35,13 @@
     <ClInclude Include="src\Tetromino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game.h">
+    <ClInclude Include="src\Tetris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

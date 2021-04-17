@@ -1,9 +1,12 @@
-#include "Game.h"
+#include "Tetris.h"
+
+#include <iostream>
+#include <thread>
 
 namespace ar {
 	// Public functions
 	// Constructor
-	Game::Game() : m_is_running{ true }, m_is_paused{ false }, m_fixed_delta_time{}, m_delta_time{}, randomBag{} {
+	Tetris::Tetris() : m_is_running{ true }, m_is_paused{ false }, m_fixed_delta_time{}, m_delta_time{}, randomBag{} {
 		// Initialize playing field
 		// Playing field
 		nFieldWidth = 10;
@@ -62,7 +65,7 @@ namespace ar {
 	}
 
 	// Deconstructor
-	Game::~Game() {
+	Tetris::~Tetris() {
 		// Game over message
 		// Need to close console handle before writing to std::cout
 		CloseHandle(hConsole);
@@ -75,7 +78,7 @@ namespace ar {
 	}
 
 	// Functions
-	void Game::fixed_update() {
+	void Tetris::fixed_update() {
 		// For ms suffix
 		using namespace std::chrono_literals;
 
@@ -214,7 +217,7 @@ namespace ar {
 	/*void Game::update();
 	void Game::late_update();*/
 
-	void Game::on_render() {
+	void Tetris::on_render() {
 		// For ms suffix
 		using namespace std::chrono_literals;
 
@@ -279,10 +282,10 @@ namespace ar {
 
 	//void Game::on_game_pause();
 
-	bool Game::is_running() const noexcept {
+	bool Tetris::is_running() const noexcept {
 		return m_is_running;
 	}
-	bool Game::is_paused() const noexcept {
+	bool Tetris::is_paused() const noexcept {
 		return m_is_paused;
 	}
 
@@ -294,7 +297,7 @@ namespace ar {
 	/// <param name="py">The y position of the piece.</param>
 	/// <param name="r">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270.</param>
 	/// <returns>Rotated index.</returns>
-	int Game::Rotate(int px, int py, int r)
+	int Tetris::Rotate(int px, int py, int r)
 	{
 		// TODO: Use enum for rotation
 		switch (r % 4)
@@ -315,7 +318,7 @@ namespace ar {
 	/// <param name="nPosX">The x position of the top left corner of the tetromino.</param>
 	/// <param name="nPosY">The y position of the top left corner of the tetromino.</param>
 	/// <returns>True, if the piece fits; false, otherwise.</returns>
-	bool Game::DoesPieceFit(const Tetromino& tetromino, int nRotation, int nPosX, int nPosY)
+	bool Tetris::DoesPieceFit(const Tetromino& tetromino, int nRotation, int nPosX, int nPosY)
 	{
 		for (int px = 0; px < 4; px++)
 		{
