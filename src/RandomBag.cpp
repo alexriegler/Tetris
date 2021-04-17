@@ -6,14 +6,12 @@
 #include <chrono>
 #include <random>
 
-namespace Tetris
-{
+namespace ar {
 	// Constructor
 	RandomBag::RandomBag()
 		: m_bag{ default_tetromino_set }, m_count{ s_bag_size },
 		m_swap_bag{}, m_swap_count{ 0 }, m_use_swap_bag{ false },
-		seed{ static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()) }
-	{
+		seed{ static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()) } {
 		std::shuffle(m_bag.begin(), m_bag.end(), std::default_random_engine(seed));
 	}
 

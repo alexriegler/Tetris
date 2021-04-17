@@ -4,10 +4,8 @@
 #include "Tetromino.h"
 #include <array>
 
-namespace Tetris
-{
-	class RandomBag : public RandomGenerator 
-	{
+namespace ar {
+	class RandomBag : public RandomGenerator {
 	public:
 		// Constructor
 		RandomBag();

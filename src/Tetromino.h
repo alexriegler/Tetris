@@ -3,8 +3,7 @@
 #include <array>
 #include <string>
 
-namespace Tetris
-{
+namespace ar {
 	enum class Shape { I, J, L, O, S, Z, T };
 
 #pragma region Tetromino wstrings

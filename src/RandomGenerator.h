@@ -1,8 +1,7 @@
 #pragma once
 #include "Tetromino.h"
 
-namespace Tetris
-{
+namespace ar {
 	class RandomGenerator
 	{
 	public:

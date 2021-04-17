@@ -82,6 +82,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -147,10 +150,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\RandomBag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\RandomBag.h" />
     <ClInclude Include="src\RandomGenerator.h" />
     <ClInclude Include="src\Tetromino.h" />
