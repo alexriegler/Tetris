@@ -19,18 +19,11 @@ namespace ar {
 
 		// Functions
 		// Event functions
-		// fixed time interval update
-		// check collision?
 		void fixed_update() override;
-		
-		// TODO:
-		/*void update();
-		void late_update();*/
-		
+		void update() override;
+		void late_update() override;
 		void on_render() override;
-
-		// TODO:
-		//void on_game_pause();
+		void on_game_pause() override;
 
 		// Accessor functions
 		bool is_running() const noexcept override;

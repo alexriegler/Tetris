@@ -214,8 +214,11 @@ namespace ar {
 		}		
 	}
 
-	/*void Game::update();
-	void Game::late_update();*/
+	// Does nothing
+	void Tetris::update() { return; }
+	
+	// Does nothing
+	void Tetris::late_update() { return; }
 
 	void Tetris::on_render() {
 		// For ms suffix
@@ -280,7 +283,8 @@ namespace ar {
 		WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0, 0 }, &dwBytesWritten);
 	}
 
-	//void Game::on_game_pause();
+	// Does nothing
+	void Tetris::on_game_pause() { return; }
 
 	bool Tetris::is_running() const noexcept {
 		return m_is_running;

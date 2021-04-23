@@ -12,15 +12,10 @@ namespace ar {
 		// Functions
 		// Event functions
 		virtual void fixed_update() = 0;
-
-		// TODO: Need these?
-		//void update();
-		//void late_update();
-
+		virtual void update() = 0;
+		virtual void late_update() = 0;
 		virtual void on_render() = 0;
-
-		// TODO: Need this?
-		//void on_game_pause();
+		virtual void on_game_pause() = 0;
 
 		// Accessor functions
 		virtual bool is_running() const = 0;
