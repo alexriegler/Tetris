@@ -1,8 +1,11 @@
-#pragma once
+module;
 
 #include <concepts>
 
+export module Game;
+
 namespace ar {
+	export
 	class Game {
 	public:
 		// Constructor
@@ -22,6 +25,7 @@ namespace ar {
 		virtual bool is_paused() const = 0;
 	};
 
+	export
 	template<class T>
 	concept GameType = std::derived_from<T, Game>;
 }

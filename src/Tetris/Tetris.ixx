@@ -1,19 +1,23 @@
-#pragma once
-
-#include "Game.h"
-#include "RandomBag.h"
-#include "Tetromino.h"
+module;
 
 #include <vector>
 
 #include <Windows.h>
 
+export module Tetris;
+
+export import Application;
+
+import RandomBag;
+import Tetromino;
+
 namespace ar {
+	export
 	class Tetris : public Game {
 	public:
 		// Constructor
 		Tetris();
-		
+
 		// Deconstructor
 		~Tetris();
 

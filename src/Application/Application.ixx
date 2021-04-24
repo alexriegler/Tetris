@@ -1,8 +1,9 @@
-#pragma once
+export module Application;
 
-#include "Game.h"
+export import Game;
 
 namespace ar {
+	export
 	template<GameType T>
 	class Application {
 	public:

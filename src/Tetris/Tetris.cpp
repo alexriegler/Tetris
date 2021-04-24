@@ -1,7 +1,12 @@
-#include "Tetris.h"
+module;
 
 #include <iostream>
 #include <thread>
+#include <vector>
+
+#include <Windows.h>
+
+module Tetris;
 
 namespace ar {
 	// Public functions

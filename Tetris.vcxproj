@@ -150,17 +150,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Tetris.cpp" />
+    <ClCompile Include="src\Application\Application.ixx" />
+    <ClCompile Include="src\Application\Game.ixx" />
+    <ClCompile Include="src\Tetris\RandomBag.ixx" />
+    <ClCompile Include="src\Tetris\RandomGenerator.ixx" />
+    <ClCompile Include="src\Tetris\Tetris.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\RandomBag.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\Tetris.h" />
-    <ClInclude Include="src\RandomBag.h" />
-    <ClInclude Include="src\RandomGenerator.h" />
-    <ClInclude Include="src\Tetromino.h" />
+    <ClCompile Include="src\Tetris\Tetris.ixx" />
+    <ClCompile Include="src\Tetris\Tetromino.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
