@@ -1,5 +1,12 @@
 import Tetris;
 
+using TetrisApp = ar::Application<ar::Tetris>;
+
+int main() {
+	TetrisApp app;
+	app.run();
+}
+
 // TODO: Split main into modular parts: game, tetris, score, field, etc.
 // TODO: Add ghost piece (where the piece will fall).
 // TODO: Add hold piece.
@@ -10,9 +17,3 @@ import Tetris;
 // TODO: Add color to pieces.
 // TODO: (Optional) Change pieces from letters to block-like character.
 // TODO: Add wall-kick (when piece is next to a wall, move piece then rotate).
-
-int main() {
-	using namespace ar;
-	Application<Tetris> app;
-	app.run();
-}

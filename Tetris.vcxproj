@@ -155,7 +155,7 @@
     <ClCompile Include="src\Tetris\RandomBag.ixx" />
     <ClCompile Include="src\Tetris\RandomGenerator.ixx" />
     <ClCompile Include="src\Tetris\Tetris.cpp" />
-    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Main\Main.cpp" />
     <ClCompile Include="src\Tetris\Tetris.ixx" />
     <ClCompile Include="src\Tetris\Tetromino.ixx" />
   </ItemGroup>

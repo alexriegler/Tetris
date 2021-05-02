@@ -75,9 +75,8 @@ namespace ar {
 		// Need to close console handle before writing to std::cout
 		CloseHandle(hConsole);
 		std::cout << "Game Over! Score: " << nScore << '\n';
-		// TODO: Windows specific; change to cross platform "Press any key to continue"
-		system("pause");
 
+		// Clean up raw pointers
 		delete[] screen;
 		delete[] pField;
 	}
