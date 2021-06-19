@@ -41,45 +41,46 @@ namespace ar {
 		// Data
 		// Game state
 		// TODO: Add console/window class
-		bool m_is_running;
-		bool m_is_paused;
-		float m_fixed_delta_time; // float?
-		float m_delta_time; // float?
+		bool m_is_running{ true };
+		bool m_is_paused{ false };
+		float m_fixed_delta_time{ 0.0f };
+		float m_delta_time{ 0.0f };
 
 		// Original data
 		// Tetrominoes
-		RandomBag randomBag;
+		RandomBag randomBag{};
 
 		// Playing field
-		int nFieldWidth;
-		int nFieldHeight;
-		unsigned char* pField;
+		const int nFieldWidth{ 10 };
+		const int nFieldHeight{ 20 };
+		unsigned char pField[10 * 20];	// TODO: Add Field abstraction
 
 		// Console screen
-		int nScreenWidth;		// Console screen size x (columns)
-		int nScreenHeight;		// Console screen size y (rows)
-		wchar_t* screen;		// Console screen to be used as screen buffer
-		HANDLE hConsole;
-		DWORD dwBytesWritten;
+		int nScreenWidth{ 120 };		// Console screen size x (columns)
+		int nScreenHeight{ 30 };		// Console screen size y (rows)
+		wchar_t screen[120 * 30];		// Console screen to be used as screen buffer
+		
+		HANDLE hConsole{ nullptr };
+		DWORD dwBytesWritten{ 0 };
 
 		// Game state
 		Tetromino cur_piece;
-		int nCurrentRotation;
-		int nCurrentX;
-		int nCurrentY;
+		int nCurrentRotation{ 0 };
+		int nCurrentX{ nFieldWidth / 2 - 2 };
+		int nCurrentY{ 0 };
 
 		// Input
 		bool bKey[4];
-		bool bRotateHold;
+		bool bRotateHold{ true };
 
 		// Game difficulty
-		int nSpeed;
-		int nSpeedCounter;
-		bool bForceDown;
-		int nPieceCount;
+		int nSpeed{ 20 };
+		int nSpeedCounter{ 0 };
+		bool bForceDown{ false };
+		int nPieceCount{ 0 };
 
 		// Score
-		int nScore;
-		std::vector<int> vLines;	// Number of lines cleared
+		int nScore{ 0 };
+		std::vector<int> vLines{};	// Number of lines cleared
 	};
 }

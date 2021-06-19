@@ -11,15 +11,8 @@ module Tetris;
 namespace ar {
 	// Public functions
 	// Constructor
-	Tetris::Tetris() : m_is_running{ true }, m_is_paused{ false }, m_fixed_delta_time{}, m_delta_time{}, randomBag{} {
+	Tetris::Tetris() {
 		// Initialize playing field
-		// Playing field
-		nFieldWidth = 10;
-		nFieldHeight = 20;
-		
-		// Create playing field buffer
-		pField = new unsigned char[nFieldWidth * nFieldHeight];
-
 		// Create playing field boundary
 		for (int x = 0; x < nFieldWidth; x++)
 		{
@@ -32,41 +25,20 @@ namespace ar {
 			}
 		}
 
-		nScreenWidth = 120;
-		nScreenHeight = 30;
-
 		// Setup console to be used as screen buffer
-		screen = new wchar_t[nScreenWidth * nScreenHeight];
 		for (int i = 0; i < nScreenWidth * nScreenHeight; i++)
 		{
 			screen[i] = L' ';
 		}
+
 		hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 		SetConsoleActiveScreenBuffer(hConsole);
-		dwBytesWritten = 0;
-
-		// Game logic
-		// TODO: Change instances of "bGameOver" to "m_is_running"
-		// bool bGameOver = false;
 
 		// Game state
 		cur_piece = randomBag.next();
-		nCurrentRotation = 0;
-		nCurrentX = nFieldWidth / 2 - 2;
-		nCurrentY = 0;
 
 		// Input
 		// TODO: Add up arrow for hard drop
-		bRotateHold = true;
-
-		// Game difficulty
-		nSpeed = 20;
-		nSpeedCounter = 0;
-		bForceDown = false;
-		nPieceCount = 0;
-
-		// Score
-		nScore = 0;
 	}
 
 	// Deconstructor
@@ -75,10 +47,6 @@ namespace ar {
 		// Need to close console handle before writing to std::cout
 		CloseHandle(hConsole);
 		std::cout << "Game Over! Score: " << nScore << '\n';
-
-		// Clean up raw pointers
-		delete[] screen;
-		delete[] pField;
 	}
 
 	// Functions
