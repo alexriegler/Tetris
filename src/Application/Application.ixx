@@ -9,7 +9,6 @@ namespace ar {
 	public:
 		// Constructor
 		// TODO: Add constructor for game so that commandline options can be passed to it
-		Application() : m_game{} {}
 
 		// Functions
 		void run() {
@@ -27,6 +26,6 @@ namespace ar {
 
 	private:
 		// Data
-		T m_game;
+		T m_game{};
 	};
 }
