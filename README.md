@@ -1,19 +1,6 @@
 # Tetris
 > A simple Tetris clone
 
-## Table of contents
-* [General Info](#general-info)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [How to Play](#how-to-play)
-  * [Controls](#controls)
-  * [Scoring](#scoring)
-* [Features](#features)
-* [To Do's](#to-dos)
-* [Status](#status)
-* [Inspiration](#inspiration)
-* [Author](#author)
-
 ## General Info
 Have you ever been bored sitting at your command line? Static characters making your eyes dry out? Well, have I got the solution for you! A command line Tetris clone!
 
@@ -76,6 +63,3 @@ Project is: _in progress_
 
 ## Inspiration
 This project is based on [Javidx9's](https://github.com/OneLoneCoder) Tetris project, which is a single file Tetris implementation that can be found [here](https://github.com/OneLoneCoder/videos/blob/master/OneLoneCoder_Tetris.cpp), and his tutorial video [here](https://youtu.be/8OK8_tHeCIA). I modified the source to be more modular and to utilize modern C++ features, including C++20 [modules](https://en.cppreference.com/w/cpp/language/modules) and [concepts](https://en.cppreference.com/w/cpp/concepts). The code is still a work in progress as there are many improvements to be made in terms of code.
-
-## Author
-Created by Alex Riegler.
