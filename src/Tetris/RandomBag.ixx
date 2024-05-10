@@ -1,15 +1,9 @@
-module;
-
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <chrono>
-#include <random>
-
 export module RandomBag;
 
 import RandomGenerator;
 import Tetromino;
+
+import std;
 
 namespace ar {
 	static constexpr int s_bag_size = 7;
@@ -64,7 +58,9 @@ namespace ar {
 		/// </summary>
 		/// <returns>The next tetromino from the main bag.</returns>
 		Tetromino& grab_from_bag() {
-			assert(m_count != 0);
+			if (m_bag.empty()) {
+				throw std::runtime_error("Can't grab from an empty bag!");
+			}
 			Tetromino& tetromino = m_bag[m_count - 1];
 			m_count--;
 			return tetromino;
@@ -75,7 +71,9 @@ namespace ar {
 		/// </summary>
 		/// <returns>The next tetromino from the swap bag.</returns>
 		Tetromino& grab_from_swap() {
-			assert(m_swap_count != 0);
+			if (m_bag.empty()) {
+				throw std::runtime_error("Can't grab from an empty bag!");
+			}
 			Tetromino& tetromino = m_swap_bag[m_swap_count - 1];
 			m_swap_count--;
 			return tetromino;

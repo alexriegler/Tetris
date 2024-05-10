@@ -1,12 +1,11 @@
 module;
 
-#include <iostream>
-#include <thread>
-#include <vector>
-
+#include <wchar.h>
 #include <Windows.h>
 
 module Tetris;
+
+import std;
 
 namespace ar {
 	// Public functions
@@ -183,12 +182,12 @@ namespace ar {
 			}
 
 			nSpeedCounter = 0;
-		}		
+		}
 	}
 
 	// Does nothing
 	void Tetris::update() { return; }
-	
+
 	// Does nothing
 	void Tetris::late_update() { return; }
 
@@ -205,9 +204,9 @@ namespace ar {
 				// Symbol key:
 				// Index	Char	Represents
 				// ______________________________
-				//   0	|	( )	  |	empty space 
+				//   0	|	( )	  |	empty space
 				//  1-7	|  (A-G)  |	tetrominoes
-				//   8	|	(=)	  |	   line 
+				//   8	|	(=)	  |	   line
 				//   9	|	(#)	  |	  border
 				screen[(y + 2) * nScreenWidth + (x + 2)] = L" ABCDEFG=#"[pField[y * nFieldWidth + x]];
 			}

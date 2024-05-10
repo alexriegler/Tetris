@@ -1,8 +1,6 @@
-module;
-
-#include <concepts>
-
 export module Game;
+
+import std;
 
 namespace ar {
 	export

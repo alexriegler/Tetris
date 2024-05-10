@@ -1,9 +1,6 @@
-module;
-
-#include <array>
-#include <string>
-
 export module Tetromino;
+
+import std;
 
 namespace ar {
 	enum class Shape { I, J, L, O, S, Z, T };

@@ -1,7 +1,5 @@
 module;
 
-#include <vector>
-
 #include <Windows.h>
 
 export module Tetris;
@@ -10,6 +8,8 @@ export import Application;
 
 import RandomBag;
 import Tetromino;
+
+import std;
 
 namespace ar {
 	export
@@ -59,7 +59,7 @@ namespace ar {
 		int nScreenWidth{ 120 };		// Console screen size x (columns)
 		int nScreenHeight{ 30 };		// Console screen size y (rows)
 		wchar_t screen[120 * 30];		// Console screen to be used as screen buffer
-		
+
 		HANDLE hConsole{ nullptr };
 		DWORD dwBytesWritten{ 0 };
 
