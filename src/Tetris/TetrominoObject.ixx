@@ -1,5 +1,6 @@
 export module TetrominoObject;
 
+export import Rotation;
 export import Tetromino;
 
 namespace ar
@@ -11,6 +12,6 @@ export struct TetrominoObject
     Tetromino mPiece{};
     int mX{};
     int mY{};
-    int mRotation{};
+    Rotation mRotation{};
 };
 }  // namespace ar

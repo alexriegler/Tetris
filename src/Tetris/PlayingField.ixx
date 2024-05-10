@@ -1,7 +1,8 @@
 export module PlayingField;
 
-import TetrominoObject;
 import Drawable;
+import Rotation;
+import TetrominoObject;
 
 import std;
 
@@ -67,7 +68,7 @@ public:
     {
         if (DoesPieceFit(mCurrentPiece.mX, mCurrentPiece.mY, mCurrentPiece.mRotation + 1))
         {
-            mCurrentPiece.mRotation++;
+            ++mCurrentPiece.mRotation;
             return true;
         }
         return false;
@@ -128,7 +129,7 @@ public:
         mCurrentPiece.mPiece = tetromino;
         mCurrentPiece.mX = mFieldWidth / 2 - 2;
         mCurrentPiece.mY = 0;
-        mCurrentPiece.mRotation = 0;
+        mCurrentPiece.mRotation = Rotation::None;
     }
 
     bool IsCurrentPieceInBounds() const
@@ -152,26 +153,26 @@ private:
     /// <summary>
     /// Checks whether the current piece fits in a given location.
     /// </summary>
-    /// <param name="nPosX">The x position of the top left corner of the tetromino.</param>
-    /// <param name="nPosY">The y position of the top left corner of the tetromino.</param>
-    /// <param name="nRotation">The degree of rotation: 0 = none, 1 = 90, 2 = 180, 3 = 270.</param>
+    /// <param name="x">The x position of the top left corner of the tetromino.</param>
+    /// <param name="y">The y position of the top left corner of the tetromino.</param>
+    /// <param name="rotation">The amount of rotation.</param>
     /// <returns>True, if the piece fits; false, otherwise.</returns>
-    bool DoesPieceFit(int nPosX, int nPosY, int nRotation) const
+    bool DoesPieceFit(int x, int y, Rotation rotation) const
     {
         for (int px = 0; px < 4; px++)
         {
             for (int py = 0; py < 4; py++)
             {
                 // Get index into piece
-                int pi = Rotate(px, py, nRotation);
+                int pi = Rotate(px, py, rotation);
 
                 // Get index into field
-                int fi = (nPosY + py) * mFieldWidth + (nPosX + px);
+                int fi = (y + py) * mFieldWidth + (x + px);
 
                 // Check array bounds
-                if (nPosX + px >= 0 && nPosX + px < mFieldWidth)
+                if (x + px >= 0 && x + px < mFieldWidth)
                 {
-                    if (nPosY + py >= 0 && nPosY + py < mFieldHeight)
+                    if (y + py >= 0 && y + py < mFieldHeight)
                     {
                         // Detect collision (check if piece fits in location
                         if (mCurrentPiece[pi] == L'X' && mField[fi] != 0)

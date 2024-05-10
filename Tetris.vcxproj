@@ -159,6 +159,7 @@
     <ClCompile Include="src\Tetris\PlayingField.ixx" />
     <ClCompile Include="src\Tetris\RandomBag.ixx" />
     <ClCompile Include="src\Tetris\RandomGenerator.ixx" />
+    <ClCompile Include="src\Tetris\Rotation.ixx" />
     <ClCompile Include="src\Tetris\Score.ixx" />
     <ClCompile Include="src\Tetris\Tetris.cpp" />
     <ClCompile Include="src\Main\Main.cpp" />

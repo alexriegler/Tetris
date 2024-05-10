@@ -57,5 +57,8 @@
     <ClCompile Include="src\Graphics\Drawable.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tetris\Rotation.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
