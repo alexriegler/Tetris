@@ -2,9 +2,10 @@ import Tetris;
 
 using TetrisApp = ar::Application<ar::Tetris>;
 
-int main() {
-	TetrisApp app;
-	app.run();
+int main()
+{
+    TetrisApp app;
+    app.run();
 }
 
 // TODO: Split main into modular parts: game, tetris, score, field, etc.
