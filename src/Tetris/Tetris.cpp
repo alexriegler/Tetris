@@ -19,6 +19,11 @@ Tetris::Tetris()
 
     mDrawables.emplace_back(mPlayingField);
     mDrawables.emplace_back(mScore);
+
+    mKeyboard.RegisterKey(Key::RightArrow);
+    mKeyboard.RegisterKey(Key::LeftArrow);
+    mKeyboard.RegisterKey(Key::DownArrow);
+    mKeyboard.RegisterKey(Key::ZKey);
 }
 
 // Functions
@@ -32,46 +37,32 @@ void Tetris::fixed_update()
     mForceDown = (mSpeedCounter == mSpeed);
 
     // INPUT =================================================
+    mKeyboard.ProcessInput();
     // TODO: Add up arrow for hard drop
-    for (int k = 0; k < 4; k++)
-    {
-        // \x27		= Right arrow	VK_RIGHT
-        // \x25		= Left arrow	VK_LEFT
-        // \x28		= Down arrow	VK_DOWN
-        // Z		= Z (rotate)	0x5A
-        mKey[k] = (0x8000 & GetAsyncKeyState((unsigned char)("\x27\x25\x28Z"[k]))) != 0;
-    }
 
     // GAME LOGIC ============================================
+    const auto moveDelay = 250ms;
     // Player movement
     // Right key pressed
-    if (mKey[0])
+    if (mKeyboard.KeyPressed(Key::RightArrow) or mKeyboard.KeyHeldFor(Key::RightArrow, moveDelay))
     {
         mPlayingField.TryMovePieceRight();
     }
     // Left key pressed
-    if (mKey[1])
+    if (mKeyboard.KeyPressed(Key::LeftArrow) or mKeyboard.KeyHeldFor(Key::LeftArrow, moveDelay))
     {
         mPlayingField.TryMovePieceLeft();
     }
     // Down key pressed
-    if (mKey[2])
+    if (mKeyboard.KeyHeld(Key::DownArrow))
     {
         mPlayingField.TryMovePieceDown();
     }
     // Z key pressed (rotate)
     // Latches the rotation so that it does spin repetitively
-    if (mKey[3])
+    if (mKeyboard.KeyPressed(Key::ZKey))
     {
-        if (!mRotateHold)
-        {
-            mPlayingField.TryRotatePieceClockwise();
-        }
-        mRotateHold = true;
-    }
-    else
-    {
-        mRotateHold = false;
+        mPlayingField.TryRotatePieceClockwise();
     }
 
     // Game movement

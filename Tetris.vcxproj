@@ -156,6 +156,7 @@
     <ClCompile Include="src\Application\Game.ixx" />
     <ClCompile Include="src\Graphics\Drawable.ixx" />
     <ClCompile Include="src\Graphics\Renderer.ixx" />
+    <ClCompile Include="src\Input\KeyboardInput.ixx" />
     <ClCompile Include="src\Tetris\PlayingField.ixx" />
     <ClCompile Include="src\Tetris\RandomBag.ixx" />
     <ClCompile Include="src\Tetris\RandomGenerator.ixx" />
@@ -166,6 +167,7 @@
     <ClCompile Include="src\Tetris\Tetris.ixx" />
     <ClCompile Include="src\Tetris\Tetromino.ixx" />
     <ClCompile Include="src\Tetris\TetrominoObject.ixx" />
+    <ClCompile Include="src\Time\Time.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

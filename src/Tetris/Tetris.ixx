@@ -6,12 +6,13 @@ export module Tetris;
 
 export import Application;
 
-import RandomBag;
-import Tetromino;
-import PlayingField;
-import Score;
 import Drawable;
 import Game;
+import KeyboardInput;
+import PlayingField;
+import RandomBag;
+import Score;
+import Tetromino;
 
 import std;
 
@@ -58,8 +59,7 @@ private:
     int mPieceCount{0};
 
     // Input
-    bool mKey[4];
-    bool mRotateHold{true};
+    KeyboardInput mKeyboard{};
 
     RandomBag mRandomBag{};
     PlayingField mPlayingField{};
