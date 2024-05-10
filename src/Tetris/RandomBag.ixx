@@ -12,7 +12,7 @@ export class RandomBag : public RandomGenerator
 public:
     // Constructor
     RandomBag()
-        : mBag{default_tetromino_set}
+        : mBag{defaultTetrominoSet}
         , mCount{bagSize}
         , mSwapBag{}
         , mSwapCount{0}
@@ -33,7 +33,7 @@ public:
         {
             if (mSwapCount == 0)
             {
-                mBag = default_tetromino_set;
+                mBag = defaultTetrominoSet;
                 mCount = bagSize;
                 std::shuffle(mBag.begin(), mBag.end(), std::default_random_engine(mSeed));
                 mUseSwapBag = false;
@@ -48,7 +48,7 @@ public:
         {
             if (mCount == 0)
             {
-                mSwapBag = default_tetromino_set;
+                mSwapBag = defaultTetrominoSet;
                 mSwapCount = bagSize;
                 std::shuffle(mSwapBag.begin(), mSwapBag.end(), std::default_random_engine(mSeed));
                 mUseSwapBag = true;

@@ -63,7 +63,7 @@ public:
                 const auto& piece = playingField.GetCurrentPiece();
                 if (piece[Rotate(px, py, piece.mRotation)] == L'X')
                 {
-                    mScreen[(piece.mY + py + 2) * mScreenWidth + (piece.mX + px + 2)] = piece.mPiece.symbol;
+                    mScreen[(piece.mY + py + 2) * mScreenWidth + (piece.mX + px + 2)] = piece.mPiece.mSymbol;
                 }
             }
         }

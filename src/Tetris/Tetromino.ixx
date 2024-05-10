@@ -4,48 +4,40 @@ import std;
 
 namespace ar
 {
-// TODO: Move into Tetromino class
-enum class Shape
-{
-    I,
-    J,
-    L,
-    O,
-    S,
-    Z,
-    T
-};
-
 export struct Tetromino
 {
-    // Constructors
-    Tetromino()
-        : shape{}
-        , symbol{}
-        , id{}
-        , piece{}
+    enum class Shape
     {
-    }
+        I,
+        J,
+        L,
+        O,
+        S,
+        Z,
+        T
+    };
+
+    // Constructors
+    Tetromino() = default;
 
     Tetromino(Shape shape, wchar_t symbol, int id, const std::wstring& piece)
-        : shape{shape}
-        , symbol{symbol}
-        , id{id}
-        , piece{piece}
+        : mShape{shape}
+        , mSymbol{symbol}
+        , mId{id}
+        , mPiece{piece}
     {
     }
 
     // Functions
-    const wchar_t operator[](int idx) const { return piece[idx]; }
+    const wchar_t operator[](int idx) const { return mPiece[idx]; }
 
     // Data
-    Shape shape;
-    wchar_t symbol;
-    int id;
-    std::wstring piece;
+    Shape mShape{};
+    wchar_t mSymbol{};
+    int mId{};
+    std::wstring mPiece{};
 };
 
-// TODO: Shoud this be const/constexpr?
 #pragma region Tetromino wstrings
 const std::wstring Ipiece{
     L"...."
@@ -90,18 +82,15 @@ const std::wstring Tpiece{
     L"...."};
 #pragma endregion
 
-// TODO: Shoud this be const/constexpr?
-const Tetromino I_tetro{Shape::I, L'A', 1, Ipiece};
-const Tetromino J_tetro{Shape::J, L'B', 2, Jpiece};
-const Tetromino L_tetro{Shape::L, L'C', 3, Lpiece};
-const Tetromino O_tetro{Shape::O, L'D', 4, Opiece};
-const Tetromino S_tetro{Shape::S, L'E', 5, Spiece};
-const Tetromino Z_tetro{Shape::Z, L'F', 6, Zpiece};
-const Tetromino T_tetro{Shape::T, L'G', 7, Tpiece};
+const Tetromino I_tetro{Tetromino::Shape::I, L'A', 1, Ipiece};
+const Tetromino J_tetro{Tetromino::Shape::J, L'B', 2, Jpiece};
+const Tetromino L_tetro{Tetromino::Shape::L, L'C', 3, Lpiece};
+const Tetromino O_tetro{Tetromino::Shape::O, L'D', 4, Opiece};
+const Tetromino S_tetro{Tetromino::Shape::S, L'E', 5, Spiece};
+const Tetromino Z_tetro{Tetromino::Shape::Z, L'F', 6, Zpiece};
+const Tetromino T_tetro{Tetromino::Shape::T, L'G', 7, Tpiece};
 
-// TODO: Replace 7 constant
-// TODO: Shoud this be const/constexpr?
-export std::array<Tetromino, 7> default_tetromino_set = {I_tetro, J_tetro, L_tetro, O_tetro, S_tetro, Z_tetro, T_tetro};
+export const std::array defaultTetrominoSet = {I_tetro, J_tetro, L_tetro, O_tetro, S_tetro, Z_tetro, T_tetro};
 
 /// <summary>
 /// Returns a new index for a tetromino piece given its coordinates and a rotation.

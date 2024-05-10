@@ -82,7 +82,7 @@ public:
             {
                 if (mCurrentPiece[Rotate(px, py, mCurrentPiece.mRotation)] == L'X')
                 {
-                    SetPixel(mCurrentPiece.mX + px, mCurrentPiece.mY + py, mCurrentPiece.mPiece.id);
+                    SetPixel(mCurrentPiece.mX + px, mCurrentPiece.mY + py, mCurrentPiece.mPiece.mId);
                 }
             }
         }
