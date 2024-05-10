@@ -1,14 +1,17 @@
 import Tetris;
+import Console;
 
-using TetrisApp = ar::Application<ar::Tetris>;
+namespace ar
+{
+using TetrisApp = Application<Tetris, Console>;
+}
 
 int main()
 {
-    TetrisApp app;
+    ar::TetrisApp app;
     app.run();
 }
 
-// TODO: Split main into modular parts: game, tetris, score, field, etc.
 // TODO: Add ghost piece (where the piece will fall).
 // TODO: Add hold piece.
 // TODO: Add future piece preview.

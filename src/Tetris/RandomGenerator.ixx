@@ -4,6 +4,7 @@ import Tetromino;
 
 namespace ar
 {
+// TODO: Switch to concept?
 export class RandomGenerator
 {
 public:

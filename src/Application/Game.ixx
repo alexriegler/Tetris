@@ -1,29 +1,38 @@
 export module Game;
 
+import Drawable;
+
 import std;
 
 namespace ar
 {
-export class Game
-{
-public:
-    // Constructor
-    Game() = default;
-    virtual ~Game() {};
-
-    // Functions
+export template<class T>
+concept Game = requires(T t, const T constT) {
     // Event functions
-    virtual void fixed_update() = 0;
-    virtual void update() = 0;
-    virtual void late_update() = 0;
-    virtual void on_render() = 0;
-    virtual void on_game_pause() = 0;
+    {
+        t.fixed_update()
+    } -> std::same_as<void>;
+    {
+        t.update()
+    } -> std::same_as<void>;
+    {
+        t.late_update()
+    } -> std::same_as<void>;
+    {
+        t.on_game_pause()
+    } -> std::same_as<void>;
 
     // Accessor functions
-    virtual bool is_running() const = 0;
-    virtual bool is_paused() const = 0;
-};
+    {
+        constT.is_running()
+    } -> std::same_as<bool>;
+    {
+        constT.is_paused()
+    } -> std::same_as<bool>;
 
-export template<class T>
-concept GameType = std::derived_from<T, Game>;
+    // Drawing
+    constT.get_drawables();
+    // TODO: Add return type checking for get_drawables
+    // std::visit([]() {}, std::declval<decltype(constT.get_drawables())::value_type>());
+};
 }  // namespace ar

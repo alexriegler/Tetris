@@ -7,21 +7,19 @@ import std;
 
 namespace ar
 {
-static constexpr int s_bag_size = 7;
-
 export class RandomBag : public RandomGenerator
 {
 public:
     // Constructor
     RandomBag()
-        : m_bag {default_tetromino_set}
-        , m_count {s_bag_size}
-        , m_swap_bag {}
-        , m_swap_count {0}
-        , m_use_swap_bag {false}
-        , seed {static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count())}
+        : mBag{default_tetromino_set}
+        , mCount{bagSize}
+        , mSwapBag{}
+        , mSwapCount{0}
+        , mUseSwapBag{false}
+        , mSeed{static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count())}
     {
-        std::shuffle(m_bag.begin(), m_bag.end(), std::default_random_engine(seed));
+        std::shuffle(mBag.begin(), mBag.end(), std::default_random_engine(mSeed));
     }
 
     // Functions
@@ -31,14 +29,14 @@ public:
     /// <returns>The next random tetromino.</returns>
     Tetromino next() override
     {
-        if (m_use_swap_bag)
+        if (mUseSwapBag)
         {
-            if (m_swap_count == 0)
+            if (mSwapCount == 0)
             {
-                m_bag = default_tetromino_set;
-                m_count = s_bag_size;
-                std::shuffle(m_bag.begin(), m_bag.end(), std::default_random_engine(seed));
-                m_use_swap_bag = false;
+                mBag = default_tetromino_set;
+                mCount = bagSize;
+                std::shuffle(mBag.begin(), mBag.end(), std::default_random_engine(mSeed));
+                mUseSwapBag = false;
                 return grab_from_bag();
             }
             else
@@ -48,12 +46,12 @@ public:
         }
         else
         {
-            if (m_count == 0)
+            if (mCount == 0)
             {
-                m_swap_bag = default_tetromino_set;
-                m_swap_count = s_bag_size;
-                std::shuffle(m_swap_bag.begin(), m_swap_bag.end(), std::default_random_engine(seed));
-                m_use_swap_bag = true;
+                mSwapBag = default_tetromino_set;
+                mSwapCount = bagSize;
+                std::shuffle(mSwapBag.begin(), mSwapBag.end(), std::default_random_engine(mSeed));
+                mUseSwapBag = true;
                 return grab_from_swap();
             }
             else
@@ -71,12 +69,12 @@ private:
     /// <returns>The next tetromino from the main bag.</returns>
     Tetromino& grab_from_bag()
     {
-        if (m_bag.empty())
+        if (mBag.empty())
         {
             throw std::runtime_error("Can't grab from an empty bag!");
         }
-        Tetromino& tetromino = m_bag[m_count - 1];
-        m_count--;
+        Tetromino& tetromino = mBag[mCount - 1];
+        mCount--;
         return tetromino;
     }
 
@@ -86,24 +84,27 @@ private:
     /// <returns>The next tetromino from the swap bag.</returns>
     Tetromino& grab_from_swap()
     {
-        if (m_bag.empty())
+        if (mBag.empty())
         {
             throw std::runtime_error("Can't grab from an empty bag!");
         }
-        Tetromino& tetromino = m_swap_bag[m_swap_count - 1];
-        m_swap_count--;
+        Tetromino& tetromino = mSwapBag[mSwapCount - 1];
+        mSwapCount--;
         return tetromino;
     }
 
+    static constexpr int bagSize = 7;
+    using Bag = std::array<Tetromino, bagSize>;
+
     // Data
-    std::array<Tetromino, s_bag_size> m_bag;
-    int m_count;
+    Bag mBag;
+    int mCount;
 
-    std::array<Tetromino, s_bag_size> m_swap_bag;
-    int m_swap_count;
+    Bag mSwapBag;
+    int mSwapCount;
 
-    bool m_use_swap_bag;
+    bool mUseSwapBag;
 
-    unsigned int seed;
+    unsigned int mSeed;
 };
 }  // namespace ar

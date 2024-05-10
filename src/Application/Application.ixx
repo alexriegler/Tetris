@@ -1,10 +1,11 @@
 export module Application;
 
 export import Game;
+export import Renderer;
 
 namespace ar
 {
-export template<GameType T>
+export template<Game G, Renderer R>
 class Application
 {
 public:
@@ -14,22 +15,34 @@ public:
     // Functions
     void run()
     {
-        while (m_game.is_running())
+        while (mGame.is_running())
         {
-            m_game.fixed_update();
-            m_game.update();
-            m_game.late_update();
-            m_game.on_render();
+            mGame.fixed_update();
+            mGame.update();
+            mGame.late_update();
 
-            if (m_game.is_paused())
+            for (const auto& drawableVar : mGame.get_drawables())
             {
-                m_game.on_game_pause();
+                std::visit(
+                    [this](auto&& drawable)
+                    {
+                        auto& ref = drawable.get();
+                        this->mRenderer.draw(ref);
+                    },
+                    drawableVar);
+            }
+            mRenderer.draw_frame();
+
+            if (mGame.is_paused())
+            {
+                mGame.on_game_pause();
             }
         }
     }
 
 private:
     // Data
-    T m_game {};
+    G mGame{};
+    R mRenderer{};
 };
 }  // namespace ar
